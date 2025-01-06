@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Telegram Catch Game</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      background-color: #282c34;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+    }
+    canvas {
+      border: 1px solid white;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="gameCanvas" width="400" height="600"></canvas>
+  <script>
+    const canvas = document.getElementById('gameCanvas');
+    const ctx = canvas.getContext('2d');
+
+    let player = { x: 180, y: 550, width: 50, height: 20 };
+    let stars = [];
+    let score = 0;
+
+    function createStar() {
+      const x = Math.random() * (canvas.width - 20);
+      stars.push({ x, y: 0, size: 20, speed: 3 + Math.random() * 2 });
+    }
+
+    function drawPlayer() {
+      ctx.fillStyle = 'blue';
+      ctx.fillRect(player.x, player.y, player.width, player.height);
+    }
+
+    function drawStars() {
+      ctx.fillStyle = 'yellow';
+      stars.forEach(star => {
+        ctx.beginPath();
+        ctx.arc(star.x, star.y, star.size / 2, 0, Math.PI * 2);
+        ctx.fill();
+      });
+    }
+
+    function updateGame() {
+      stars.forEach(star => {
+        star.y += star.speed;
+      });
+
+      stars = stars.filter(star => star.y <
